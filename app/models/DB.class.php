@@ -14,7 +14,7 @@ class DB
 
     public function __construct()
     {
-        $db_filename = APP_DIR .  'data\search.sqlite';
+        $db_filename = APP_DIR .  'data/search.sqlite';
         $this->connection = new SQLite3($db_filename);
     }
 
