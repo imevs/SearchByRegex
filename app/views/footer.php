@@ -1,5 +1,5 @@
 <hr>
 
 <footer>
-    <p>© Company 2012</p>
+    <p>© Imevs 2013</p> <a href="https://github.com/imevs/SearchByRegex">Sources on Github</a>
 </footer>
