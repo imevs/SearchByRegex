@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^styles(.*)$ web/styles/$1 [L]
+RewriteRule ^scripts(.*)$ web/scripts/$1 [L]
+RewriteRule ^(.*)$ web/index.php [QSA,L]
+</IfModule>
