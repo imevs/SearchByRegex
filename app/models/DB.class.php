@@ -2,7 +2,7 @@
 class DB
 {
     /**
-     * @var PDO
+     * @var SQLite3
      */
     private $connection;
 
@@ -15,7 +15,7 @@ class DB
     public function __construct()
     {
         $db_filename = APP_DIR .  'data\search.sqlite';
-        $this->connection = new PDO('sqlite:'. $db_filename);
+        $this->connection = new SQLite3($db_filename);
     }
 
     public function getConnection()
@@ -25,33 +25,40 @@ class DB
 
     public function getSearchResultsByID($id)
     {
-        $query = 'select * from search_results where id = ?';
-
+        $query = 'select * from search_results where id = :id';
         $sth = $this->getConnection()->prepare($query);
-        $sth->execute(array($id));
-
-        $result = $sth->fetchAll();
-        $result = array_map(function($item) {
-            $item['items'] = explode('##', $item['results']);
-            return $item;
-        }, $result);
-        return $result[0];
+        $sth->bindValue(':id', $id);
+        $result = $sth->execute();
+        $result = $result->fetchArray();
+        $result['items'] = explode('##', $result['results']);
+        return $result;
     }
 
     public function getAllSearchResults()
     {
         $query = 'select * from search_results';
         $sth = $this->getConnection()->prepare($query);
-        $sth->execute();
-        return $sth->fetchAll();
+        $res = $sth->execute();
+
+        $row = array();
+        while ($item = $res->fetchArray()){
+            $row[] = $item;
+        }
+        return $row;
     }
 
     public function processResults($url, $results, $type)
     {
-        $query = "INSERT INTO search_results(url, results, search_types, count) VALUES (?, ?, ?, ?)";
-        $insert = $this->getConnection()->prepare($query);
         $res = implode('##', $results);
-        $insert->execute(array($url, $res, $type, count($results)));
+
+        $query = "INSERT INTO search_results(url, results, search_types, count)" .
+            " VALUES (:url, :results, :search_types, :count)";
+        $insert = $this->getConnection()->prepare($query);
+        $insert->bindValue(':url', $url);
+        $insert->bindValue(':results', $res);
+        $insert->bindValue(':search_types', $type);
+        $insert->bindValue(':count', count($results));
+        $insert->execute();
     }
 
 }
