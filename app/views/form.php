@@ -18,7 +18,7 @@
         </label>
         <label class="radio">
             <input type="radio" name="searchType" id="optionsRadios3" value="text" class="choices">
-            Text
+            Search by regexp
         </label>
         <textarea name="text_value" id="searched_text" cols="30" rows="5" style="display: none">Марс</textarea>
     </fieldset>
