@@ -2,11 +2,9 @@
 
 <? if (isset($results)): ?>
     <h2>Searched results (<?= count($results)?>)</h2>
-    <dl>
-        <? $i = 0; ?>
+    <ol>
         <?foreach ($results as $result): ?>
-            <dt><?= $i++ ?></dt>
-            <dd><?= $result ?></dd>
+            <li><?= $result ?></li>
         <?endforeach;?>
-    </dl>
+    </ol>
 <? endif; ?>

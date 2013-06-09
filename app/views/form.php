@@ -2,7 +2,7 @@
 <form method="POST" id="remote_search">
     <fieldset>
         <div class="input-append">
-            <input type="url" class="span9" required name="url" placeholder="enter url">
+            <input required type="url" class="span9" name="url" placeholder="Enter url (must begin with http or https)">
             <button type="submit" class="btn">Submit</button>
         </div>
     </fieldset>

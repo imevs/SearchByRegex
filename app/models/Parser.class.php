@@ -3,14 +3,15 @@
 class Parser {
 
     protected $patterns = array(
-        'url' => '/^(https?:\/\/)?([\da-z\.-]+).*/',
+        'url' => '/^(https?:\/\/)([\da-z\.-]+).*/',
         'links' => "/<a(?:[^>]*)href=\"(https?[^\"]*)\"(?:[^>]*)>(?:[^<]*)<\/a>/is",
         'images' => "/<img(?:[^>]*)src=\"(https?[^\"]*)\"(?:[^>]*)>/is",
         'text' => '',
     );
 
     function validate($url) {
-        return preg_match($this->patterns['url'], $url);
+        $preg_match = preg_match($this->patterns['url'], $url);
+        return $preg_match;
     }
 
     function loadByUrl($url) {
